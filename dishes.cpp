@@ -4,6 +4,55 @@
 
 using namespace std;
 
+template <typename T>
+class Stack {
+private:
+    static const int MAX_SIZE = 10; 
+    array<T*, MAX_SIZE> stackArray;  
+    int currentSize;  
+
+public:
+    Stack() : currentSize(0) {
+        for (int i = 0; i < MAX_SIZE; ++i) {
+            stackArray[i] = nullptr;  
+        }
+    }
+
+    void push(T* item) {
+        if (currentSize < MAX_SIZE) {
+            stackArray[currentSize] = item;  
+            currentSize++;  
+        } else {
+            cout << "Stack is full. Cannot push the item onto the stack." << endl;
+        }
+    }
+
+    T* pop() {
+        if (currentSize > 0) {
+            currentSize--;  
+            T* item = stackArray[currentSize];
+            stackArray[currentSize] = nullptr;  
+            return item;
+        } else {
+            cout << "Stack is empty. Cannot pop from an empty stack." << endl;
+            return nullptr;
+        }
+    }
+
+    T* peek() const {
+        if (currentSize > 0) {
+            return stackArray[currentSize - 1]; 
+        } else {
+            cout << "Stack is empty. Cannot peek." << endl;
+            return nullptr;  
+        }
+    }
+
+    int size() const {
+        return currentSize;
+    }
+};
+
 class Dish {
 private:
     string description;
@@ -18,59 +67,8 @@ public:
     }
 };
 
-class DishStack {
-private:
-    static const int MAX_SIZE = 10; 
-    array<Dish*, MAX_SIZE> stackArray;  
-    int currentSize;  
-
-public:
-
-    DishStack() : currentSize(0) {
-        for (int i = 0; i < MAX_SIZE; ++i) {
-            stackArray[i] = nullptr;  
-        }
-    }
-
-    void push(Dish* dish) {
-        if (currentSize < MAX_SIZE) {
-            stackArray[currentSize] = dish;  
-            currentSize++;  
-        } else {
-            cout << "Stack is full. Cannot push the dish onto the stack." << endl;
-        }
-    }
-
-    Dish* pop() {
-        if (currentSize > 0) {
-            currentSize--;  
-            Dish* dish = stackArray[currentSize];
-            stackArray[currentSize] = nullptr;  
-            return dish;
-        } else {
-            cout << "Stack is empty. Cannot pop from an empty stack." << endl;
-            return nullptr;
-        }
-    }
-
-    Dish* peek() const {
-        if (currentSize > 0) {
-            return stackArray[currentSize - 1]; 
-        } else {
-            cout << "Stack is empty. Cannot peek." << endl;
-            return nullptr;  
-        }
-    }
-
-  
-    int size() const {
-        return currentSize;
-    }
-};
-
-
 int main() {
-    DishStack stack;  
+    Stack<Dish> stack;  
 
     Dish* fish_dish = new Dish("fish pattern");
     Dish* dog_dish = new Dish("dog pattern");
